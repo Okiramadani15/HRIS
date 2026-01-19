@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_attendance_xlsx" model="ir.actions.report">
+        <field name="name">Cetak Rekap Absensi (H/CT/S)</field>
+        <field name="model">oki.attendance.card</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">oki_custom_attendance_card.report_absensi_format</field>
+        <field name="report_file">Rekap_Absensi</field>
+        <field name="binding_model_id" ref="model_oki_attendance_card"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_overtime_xlsx" model="ir.actions.report">
+        <field name="name">Cetak Rekap Lembur (Angka)</field>
+        <field name="model">oki.attendance.card</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">oki_custom_attendance_card.report_overtime_format</field>
+        <field name="report_file">Rekap_Lembur</field>
+        <field name="binding_model_id" ref="model_oki_attendance_card"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="view_oki_attendance_card_list" model="ir.ui.view">
+        <field name="name">oki.attendance.card.list</field>
+        <field name="model">oki.attendance.card</field>
+        <field name="arch" type="xml">
+            <list string="Daftar Kartu Absensi">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="department_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_oki_attendance_card_form" model="ir.ui.view">
+        <field name="name">oki.attendance.card.form</field>
+        <field name="model">oki.attendance.card</field>
+        <field name="arch" type="xml">
+            <form string="Kartu Absensi">
+                <header>
+                    <button name="action_generate_lines" string="Generate Detail" type="object" class="oe_highlight" icon="fa-refresh"/>
+                    
+                    <button name="%(action_report_attendance_xlsx)d" string="Cetak Absensi" type="action" class="btn-secondary" icon="fa-file-excel-o"/>
+                    <button name="%(action_report_overtime_xlsx)d" string="Cetak Lembur" type="action" class="btn-secondary" icon="fa-clock-o"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" options="{'no_create': True}"/>
+                            <field name="department_id"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Detail Absensi Harian">
+                            <field name="line_ids" nolabel="1">
+                                <list editable="bottom" create="0">
+                                    <field name="date" readonly="1"/>
+                                    <field name="check_in" string="Masuk"/>
+                                    <field name="check_out" string="Keluar"/>
+                                    <field name="overtime_sys" string="Sistem" widget="float_time" readonly="1"/>
+                                    <field name="overtime_adj" string="Adj" widget="float_time"/>
+                                    <field name="overtime_hours" string="Total" widget="float_time" decoration-bf="1"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

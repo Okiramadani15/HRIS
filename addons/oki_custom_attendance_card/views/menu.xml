@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_oki_attendance_root"
+              name="Kartu Absensi"
+              parent="hr_attendance.menu_hr_attendance_root"
+              sequence="50"/>
+
+    <menuitem id="menu_oki_attendance_card"
+              name="Data Kartu Absensi"
+              parent="menu_oki_attendance_root"
+              action="action_oki_attendance_card"
+              sequence="10"/>
+
+    <menuitem id="menu_oki_attendance_wizard"
+              name="Cetak Rekap Karyawan"
+              parent="menu_oki_attendance_root"
+              action="action_oki_attendance_card_generate_wizard"
+              sequence="20"/>
+</odoo>

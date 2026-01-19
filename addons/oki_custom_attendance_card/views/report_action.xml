@@ -1,0 +1,12 @@
+<odoo>
+    <record id="action_report_attendance_card_xlsx" model="ir.actions.report">
+        <field name="name">Export Excel (XLSX)</field>
+        <field name="model">oki.attendance.card</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">oki_custom_attendance_card.attendance_card_xlsx</field>
+        <field name="report_file">Attendance Card</field>
+        <field name="print_report_name">'Attendance Card - %s' % (object.employee_id.name)</field>
+        <field name="binding_model_id" ref="model_oki_attendance_card"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

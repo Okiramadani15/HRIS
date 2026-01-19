@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_oki_attendance_card,oki.attendance.card,model_oki_attendance_card,base.group_user,1,1,1,1
+access_oki_attendance_card_line,oki.attendance.card.line,model_oki_attendance_card_line,base.group_user,1,1,1,1
+access_oki_attendance_card_generate_wizard,oki.attendance.card.generate.wizard,model_oki_attendance_card_generate_wizard,base.group_user,1,1,1,1
