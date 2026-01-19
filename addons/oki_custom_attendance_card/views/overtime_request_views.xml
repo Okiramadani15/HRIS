@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_oki_overtime_request_list" model="ir.ui.view">
+        <field name="name">oki.overtime.request.list</field>
+        <field name="model">oki.overtime.request</field>
+        <field name="arch" type="xml">
+            <list string="Surat Perintah Lembur" decoration-info="state == 'draft'" decoration-success="state == 'approved'">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="date"/>
+                <field name="hours_requested" widget="float_time"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'to_approve'" decoration-success="state == 'approved'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_oki_overtime_request_form" model="ir.ui.view">
+        <field name="name">oki.overtime.request.form</field>
+        <field name="model">oki.overtime.request</field>
+        <field name="arch" type="xml">
+            <form string="Surat Perintah Lembur">
+                <header>
+                    <button name="action_submit" string="Submit" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'to_approve'" groups="hr.group_hr_user"/>
+                    <button name="action_reject" string="Reject" type="object" invisible="state != 'to_approve'" groups="hr.group_hr_user"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to_approve,approved"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" options="{'no_create': True}" readonly="state != 'draft'"/>
+                            <field name="date" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="hours_requested" widget="float_time" readonly="state != 'draft'"/>
+                            <field name="reason" placeholder="Alasan Lembur..." readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+</odoo>

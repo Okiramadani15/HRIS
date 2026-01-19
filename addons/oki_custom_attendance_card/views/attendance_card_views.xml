@@ -24,12 +24,13 @@
         <field name="name">oki.attendance.card.list</field>
         <field name="model">oki.attendance.card</field>
         <field name="arch" type="xml">
-            <list string="Daftar Kartu Absensi">
+            <list string="Daftar Kartu Absensi" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'">
                 <field name="name"/>
                 <field name="employee_id"/>
                 <field name="department_id"/>
                 <field name="date_from"/>
                 <field name="date_to"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'"/>
             </list>
         </field>
     </record>
@@ -40,10 +41,19 @@
         <field name="arch" type="xml">
             <form string="Kartu Absensi">
                 <header>
-                    <button name="action_generate_lines" string="Generate Detail" type="object" class="oe_highlight" icon="fa-refresh"/>
+                    <button name="action_generate_lines" string="Generate Detail" type="object" 
+                            class="oe_highlight" icon="fa-refresh" invisible="state == 'confirmed'"/>
+                    <button name="action_confirm" string="Confirm (Lock)" type="object" 
+                            class="btn-primary" icon="fa-lock" invisible="state == 'confirmed'"/>
+                    <button name="action_set_to_draft" string="Set to Draft" type="object" 
+                            icon="fa-undo" invisible="state == 'draft'"/>
                     
-                    <button name="%(action_report_attendance_xlsx)d" string="Cetak Absensi" type="action" class="btn-secondary" icon="fa-file-excel-o"/>
-                    <button name="%(action_report_overtime_xlsx)d" string="Cetak Lembur" type="action" class="btn-secondary" icon="fa-clock-o"/>
+                    <button name="%(action_report_attendance_xlsx)d" string="Cetak Absensi" type="action" 
+                            class="btn-secondary" icon="fa-file-excel-o"/>
+                    <button name="%(action_report_overtime_xlsx)d" string="Cetak Lembur" type="action" 
+                            class="btn-secondary" icon="fa-clock-o"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -51,22 +61,22 @@
                     </div>
                     <group>
                         <group>
-                            <field name="employee_id" options="{'no_create': True}"/>
+                            <field name="employee_id" options="{'no_create': True}" readonly="state == 'confirmed'"/>
                             <field name="department_id"/>
                         </group>
                         <group>
-                            <field name="date_from"/>
-                            <field name="date_to"/>
+                            <field name="date_from" readonly="state == 'confirmed'"/>
+                            <field name="date_to" readonly="state == 'confirmed'"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Detail Absensi Harian">
-                            <field name="line_ids" nolabel="1">
+                            <field name="line_ids" nolabel="1" readonly="state == 'confirmed'">
                                 <list editable="bottom" create="0">
                                     <field name="date" readonly="1"/>
                                     <field name="check_in" string="Masuk"/>
                                     <field name="check_out" string="Keluar"/>
-                                    <field name="overtime_sys" string="Sistem" widget="float_time" readonly="1"/>
+                                    <field name="overtime_sys" string="Sistem (SPL)" widget="float_time" readonly="1"/>
                                     <field name="overtime_adj" string="Adj" widget="float_time"/>
                                     <field name="overtime_hours" string="Total" widget="float_time" decoration-bf="1"/>
                                     <field name="note"/>
@@ -75,6 +85,11 @@
                         </page>
                     </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>

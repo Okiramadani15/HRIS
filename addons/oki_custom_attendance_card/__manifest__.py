@@ -7,17 +7,19 @@
     "depends": [
         "hr",
         "hr_attendance",
-        "hr_holidays",  # Tambahkan ini agar bisa baca data Cuti/Sakit
+        "hr_holidays",
         "report_xlsx"
     ],
     "data": [
+        # "data/ir_sequence_data.xml",
         "security/ir.model.access.csv",
-        "wizard/attendance_card_wizard_views.xml", # URUTAN 1
-        "views/attendance_card_views.xml",          # URUTAN 2
-        "views/attendance_card_action.xml",         # URUTAN 3
-        "views/menu.xml",                          # URUTAN 4 (Menu harus paling bawah)
+        "wizard/attendance_card_wizard_views.xml",
+        "views/attendance_card_views.xml",
+        "views/overtime_request_views.xml",
+        "views/attendance_card_action.xml",
+        "views/menu.xml"
     ],
     "installable": True,
     "application": False,
-    "license": "LGPL-3",
+    "license": "LGPL-3"
 }

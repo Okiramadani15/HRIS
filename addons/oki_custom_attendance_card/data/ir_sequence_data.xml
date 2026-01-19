@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_oki_overtime_request" model="ir.sequence">
+        <name>Surat Perintah Lembur Sequence</name>
+        <code>oki.overtime.request</code>
+        <prefix>SPL/%(year)s/</prefix>
+        <padding>4</padding>
+        <company_id eval="False"/>
+    </record>
+</odoo>
